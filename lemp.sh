@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt-get update -y
-
 count=`dpkg --get-selections | grep nginx | wc -l`
 
 if [ $count -gt 0 ]
@@ -70,7 +68,7 @@ else
         echo " ----------- PHP LATEST VERSION IS NOW INSTALLED ---------------------------------------------"
 fi
 
-cp /root/mandar/templates/lemp/php.ini /etc/php/7.0/fpm/php.ini
+cp ./templates/lemp/php.ini /etc/php/7.0/fpm/php.ini
 sudo systemctl restart php7.0-fpm
 
 echo " PLEASE ENTER THE DOMAIN NAME WHICH YOU WANT BELOW"
@@ -81,7 +79,7 @@ sed -i "/${dname}/d"  /etc/hosts
 echo "127.0.0.1   $dname"  >> /etc/hosts
 cat /etc/hosts
 
-cp /root/mandar/templates/lemp/default /etc/nginx/sites-available/default
+cp ./templates/lemp/default /etc/nginx/sites-available/default
 sudo nginx -t
 sudo systemctl reload nginx
 
@@ -102,7 +100,7 @@ $MYSQL -u root -p'mandya4590' -e "$SQL"
 
 echo "-------------------------MYSQL CONFIGURATION COMPLETED------------------------------------"
 
-cp /root/mandar/templates/word/default /etc/nginx/sites-available/default
+cp ./templates/word/default /etc/nginx/sites-available/default
 sudo nginx -t
 sudo systemctl reload nginx
 
@@ -129,7 +127,7 @@ sudo chmod g+w /var/www/html/wp-content
 sudo chmod -R g+w /var/www/html/wp-content/themes
 sudo chmod -R g+w /var/www/html/wp-content/plugins
 
-cp /root/mandar/templates/word/wp-config.php /var/www/html/
+cp ./templates/word/wp-config.php /var/www/html/
 curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-config.php 
 
 sudo chown -R www-data /var/www/html
